@@ -1,0 +1,33 @@
+name: Stale Issue Management
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          stale-issue-message: |
+            This issue has been automatically marked as **stale** because it has not had activity in 30 days.
+
+            - If this is still relevant, please comment with an update or additional reproduction details.
+            - If the underlying issue has been resolved, please close it with a resolution comment.
+            - Issues with no activity for 60 days will be automatically closed.
+
+            For the handling agent: review whether this issue is still reproducible against the current implementation.
+          close-issue-message: |
+            This issue has been automatically closed after 60 days of inactivity.
+
+            If the problem persists, please open a new issue using the appropriate template and reference this issue number for context.
+          stale-issue-label: "stale"
+          days-before-stale: 30
+          days-before-close: 60
+          exempt-issue-labels: "critical,high"
+          operations-per-run: 30
