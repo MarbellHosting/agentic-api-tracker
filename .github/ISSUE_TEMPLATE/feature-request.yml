@@ -6,12 +6,63 @@ body:
     id: proposal
     attributes:
       label: "Proposal"
-      description: "Describe the feature or pattern you need."
-      placeholder: "I need Pattern X (Webhooks) because..."
+      description: "Describe the feature or pattern you need. Reference the Agentic API Standard where possible."
+      placeholder: "I need Pattern 15 (WebMCP) because..."
+    validations:
+      required: true
+  - type: checkboxes
+    id: patterns
+    attributes:
+      label: "Target Patterns"
+      description: "Which patterns would this satisfy?"
+      options:
+        - label: "Pattern 1 — API Manifest"
+        - label: "Pattern 2 — Real-time Signal Discovery"
+        - label: "Pattern 3 — Error Links & Guidance"
+        - label: "Pattern 4 — API Key Lifecycle"
+        - label: "Pattern 5 — Machine-Readable Methodology"
+        - label: "Pattern 6 — Request/Response Schemas"
+        - label: "Pattern 7 — Deterministic Horizons"
+        - label: "Pattern 8 — Fee Transparency"
+        - label: "Pattern 9 — Infrastructure Error Wrapping"
+        - label: "Pattern 10 — Content Negotiation"
+        - label: "Pattern 11 — Rate Limit Headers"
+        - label: "Pattern 12 — Legacy Path Handling"
+        - label: "Pattern 13 — Onboarding as Structured Data"
+        - label: "Pattern 14 — Anti-Pattern Documentation"
+        - label: "Pattern 15 — WebMCP / Tool Registration"
+        - label: "Pattern 16 — Schema Versioning"
+        - label: "Pattern 17 — Idempotent Writes"
+        - label: "Pattern 18 — Async Operations"
+        - label: "Pattern 19 — Cursor-Based Pagination"
+        - label: "Pattern 20 — Health Endpoint"
+  - type: dropdown
+    id: compliance_tier
+    attributes:
+      label: Compliance Tier
+      description: Which compliance tier would this feature satisfy?
+      options:
+        - Bronze (Patterns 1, 3, 4, 9, 10)
+        - Silver (Bronze + 2, 6, 7, 11, 18)
+        - Gold (All 20)
+        - Not tier-specific
     validations:
       required: true
   - type: textarea
-    id: use_case
+    id: motivation
     attributes:
-      label: "Use Case"
+      label: "Use Case / Motivation"
       description: "How will this help your autonomous agent?"
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Suggestion
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true

@@ -1,0 +1,103 @@
+name: Issue Triage
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Label and instruct
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+            const labels = context.payload.issue.labels.map(l => l.name);
+            const isBug = labels.includes('bug');
+            const isFeature = labels.includes('feature-request');
+
+            // Add severity label
+            const severityMap = {
+              'Critical': 'critical',
+              'High': 'high',
+              'Medium': 'medium',
+              'Low': 'low'
+            };
+            for (const [keyword, label] of Object.entries(severityMap)) {
+              if (body.includes(keyword)) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  labels: [label]
+                });
+                break;
+              }
+            }
+
+            // Add compliance tier label
+            const tierMap = {
+              'Bronze': 'bronze',
+              'Silver': 'silver',
+              'Gold': 'gold'
+            };
+            for (const [keyword, label] of Object.entries(tierMap)) {
+              if (body.includes(keyword)) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  labels: [label]
+                });
+                break;
+              }
+            }
+
+            // Add pattern labels for checked patterns
+            for (let i = 1; i <= 20; i++) {
+              const checkedPattern = new RegExp(`\[X\].*Pattern ${i} —`, 'i');
+              if (checkedPattern.test(body)) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  labels: [`pattern-${i}`]
+                });
+              }
+            }
+
+            // Post handling instructions
+            let instructions = '';
+
+            if (isBug) {
+              instructions = `## Agent Handling Instructions
+This issue has been filed as a **bug report** against the Agentic API Standard implementation.
+
+### For the handling agent:
+1. **Read the full issue** including all template fields.
+2. **Identify the pattern(s) violated** — read the pattern definition in the [Agentic API Standard](https://github.com/nexus-marbell/agentic-api-standard).
+3. **Reproduce the bug** using the request/response example provided.
+4. **Locate the relevant code** in the [implementation repo](https://github.com/MarbellHosting/api-indicators).
+5. **Fix or file a PR** against the implementation repo.`;
+            } else if (isFeature) {
+              instructions = `## Agent Handling Instructions
+This issue has been filed as a **feature request**.
+
+### For the handling agent:
+1. **Assess against the 20 API Standard patterns**.
+2. **Check the compliance tier** (Bronze/Silver/Gold).
+3. **Review the implementation repo** for current state.`;
+            }
+
+            if (instructions) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: instructions
+              });
+            }

@@ -12,13 +12,50 @@ body:
       placeholder: "e.g., /indicators/agents/research/backtest"
     validations:
       required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How critical is this issue?
+      options:
+        - Critical — API unusable or returns incorrect financial data
+        - High — Core feature broken, no workaround
+        - Medium — Feature broken, workaround exists
+        - Low — Cosmetic or minor inconsistency
+    validations:
+      required: true
+  - type: checkboxes
+    id: patterns
+    attributes:
+      label: "Related Agentic API Patterns"
+      description: "Which patterns does this bug violate? (See https://github.com/nexus-marbell/agentic-api-standard)"
+      options:
+        - label: "Pattern 1 — API Manifest"
+        - label: "Pattern 2 — Real-time Signal Discovery"
+        - label: "Pattern 3 — Error Links & Guidance"
+        - label: "Pattern 4 — API Key Lifecycle"
+        - label: "Pattern 5 — Machine-Readable Methodology"
+        - label: "Pattern 6 — Request/Response Schemas"
+        - label: "Pattern 7 — Deterministic Horizons"
+        - label: "Pattern 8 — Fee Transparency"
+        - label: "Pattern 9 — Infrastructure Error Wrapping"
+        - label: "Pattern 10 — Content Negotiation"
+        - label: "Pattern 11 — Rate Limit Headers"
+        - label: "Pattern 12 — Legacy Path Handling"
+        - label: "Pattern 13 — Onboarding as Structured Data"
+        - label: "Pattern 14 — Anti-Pattern Documentation"
+        - label: "Pattern 15 — WebMCP / Tool Registration"
+        - label: "Pattern 16 — Schema Versioning"
+        - label: "Pattern 17 — Idempotent Writes"
+        - label: "Pattern 18 — Async Operations"
+        - label: "Pattern 19 — Cursor-Based Pagination"
+        - label: "Pattern 20 — Health Endpoint"
   - type: textarea
     id: reproduction
     attributes:
       label: "Reproduction Steps"
       description: "How can we reproduce this? Include curl commands if possible."
-      placeholder: "1. Call X with params Y
-2. Received Z instead of A"
+      placeholder: "1. Call X with params Y\n2. Received Z instead of A"
     validations:
       required: true
   - type: textarea
