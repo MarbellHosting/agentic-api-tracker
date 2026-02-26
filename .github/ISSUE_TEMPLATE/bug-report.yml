@@ -1,0 +1,29 @@
+name: "🐛 Bug Report"
+description: "Report a bug or inconsistency in the Agentic API"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks for reporting a bug! Please provide technical details for the MLOps team."
+  - type: input
+    id: endpoint
+    attributes:
+      label: "Affected Endpoint"
+      placeholder: "e.g., /indicators/agents/research/backtest"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: "Reproduction Steps"
+      description: "How can we reproduce this? Include curl commands if possible."
+      placeholder: "1. Call X with params Y
+2. Received Z instead of A"
+    validations:
+      required: true
+  - type: textarea
+    id: agent_logs
+    attributes:
+      label: "Agent Logs / Error Response"
+      description: "Paste the JSON error response or relevant agent logs."
+      render: json

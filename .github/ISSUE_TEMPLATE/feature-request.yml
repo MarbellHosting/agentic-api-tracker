@@ -1,0 +1,17 @@
+name: "💡 Feature Request"
+description: "Suggest a new feature or Agentic API Pattern"
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "Proposal"
+      description: "Describe the feature or pattern you need."
+      placeholder: "I need Pattern X (Webhooks) because..."
+    validations:
+      required: true
+  - type: textarea
+    id: use_case
+    attributes:
+      label: "Use Case"
+      description: "How will this help your autonomous agent?"
